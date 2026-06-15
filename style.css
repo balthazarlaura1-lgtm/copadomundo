@@ -1,90 +1,153 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f9;
-  color: #222;
+const grupos = {
+A:["México","Coreia do Sul","Tchéquia","África do Sul"],
+B:["Canadá","Bósnia e Herzegovina","Suíça","Catar"],
+C:["Brasil","Marrocos","Haiti","Escócia"],
+D:["Estados Unidos","Paraguai","Austrália","Turquia"],
+E:["Alemanha","Curaçao","Costa do Marfim","Equador"],
+F:["Japão","Holanda","Suécia","Tunísia"]
+};
+
+const todasSelecoes = Object.values(grupos).flat();
+
+let partidas = [];
+
+const select1 = document.getElementById("time1");
+const select2 = document.getElementById("time2");
+
+function carregarSelecoes(){
+  select1.innerHTML = "";
+  select2.innerHTML = "";
+
+  todasSelecoes.forEach(time=>{
+    select1.add(new Option(time,time));
+    select2.add(new Option(time,time));
+  });
 }
 
-/* TÍTULO PRINCIPAL */
-h1 {
-  text-align: center;
-  background: #111;
-  color: white;
-  padding: 20px;
-  margin: 0;
+function renderizarPartidas(){
+  const tbody = document.querySelector("#tabelaPartidas tbody");
+  tbody.innerHTML = "";
+
+  partidas.forEach((jogo,i)=>{
+    tbody.innerHTML += `
+    <tr>
+      <td>${jogo.data}</td>
+      <td>${jogo.t1} x ${jogo.t2}</td>
+      <td>${jogo.g1} x ${jogo.g2}</td>
+      <td><button class="btnExcluir" onclick="excluir(${i})">X</button></td>
+    </tr>`;
+  });
 }
 
-/* SEÇÕES */
-h2 {
-  margin-top: 30px;
-  border-left: 5px solid #e74c3c;
-  padding-left: 10px;
+function excluir(i){
+  partidas.splice(i,1);
+  atualizar();
 }
 
-/* CONTAINER GERAL */
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 20px;
+document.getElementById("btnAdicionar").onclick = ()=>{
+  const data = document.getElementById("data").value;
+  const t1 = select1.value;
+  const t2 = select2.value;
+  const g1 = +document.getElementById("gols1").value;
+  const g2 = +document.getElementById("gols2").value;
+
+  if(!data || t1===t2){
+    alert("Preenche direito aí né...");
+    return;
+  }
+
+  partidas.push({data,t1,t2,g1,g2});
+  atualizar();
+};
+
+function base(){
+  const t = {};
+  todasSelecoes.forEach(n=>{
+    t[n]={nome:n,pts:0,j:0,v:0,e:0,d:0,gp:0,gc:0,sg:0};
+  });
+  return t;
 }
 
-/* FORMULÁRIO */
-input, select, button {
-  padding: 8px;
-  margin: 5px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
+function atualizar(){
+  renderizarPartidas();
+
+  const tabela = base();
+
+  partidas.forEach(j=>{
+    const a = tabela[j.t1];
+    const b = tabela[j.t2];
+
+    a.j++; b.j++;
+    a.gp += j.g1; a.gc += j.g2;
+    b.gp += j.g2; b.gc += j.g1;
+
+    a.sg = a.gp - a.gc;
+    b.sg = b.gp - b.gc;
+
+    if(j.g1 > j.g2){
+      a.v++; a.pts += 3;
+      b.d++;
+    } else if(j.g2 > j.g1){
+      b.v++; b.pts += 3;
+      a.d++;
+    } else {
+      a.e++; b.e++;
+      a.pts++; b.pts++;
+    }
+  });
+
+  geral(tabela);
+  ["A","B","C","D","E","F"].forEach(g=>grupo(g,tabela));
 }
 
-button {
-  background: #e74c3c;
-  color: white;
-  cursor: pointer;
-  border: none;
-  transition: 0.2s;
+function ordenar(lista){
+  return lista.sort((a,b)=>
+    b.pts - a.pts ||
+    b.sg - a.sg ||
+    b.gp - a.gp
+  );
 }
 
-button:hover {
-  background: #c0392b;
+function geral(tabela){
+  const corpo = document.querySelector("#classificacaoGeral tbody");
+  corpo.innerHTML = "";
+
+  ordenar(Object.values(tabela)).forEach((t,i)=>{
+    corpo.innerHTML += `
+    <tr class="${i==0?"lider":i==1?"segundo":i==2?"terceiro":""}">
+      <td>${i+1}</td>
+      <td>${t.nome}</td>
+      <td>${t.pts}</td>
+      <td>${t.j}</td>
+      <td>${t.v}</td>
+      <td>${t.e}</td>
+      <td>${t.d}</td>
+      <td>${t.gp}</td>
+      <td>${t.gc}</td>
+      <td>${t.sg}</td>
+    </tr>`;
+  });
 }
 
-/* TABELA DE JOGOS */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  margin-top: 10px;
-  border-radius: 10px;
-  overflow: hidden;
+function grupo(g,tabela){
+  const corpo = document.getElementById("grupo"+g);
+  corpo.innerHTML = "";
+
+  ordenar(grupos[g].map(n=>tabela[n])).forEach((t,i)=>{
+    corpo.innerHTML += `
+    <tr>
+      <td>${i+1}</td>
+      <td>${t.nome}</td>
+      <td>${t.pts}</td>
+      <td>${t.j}</td>
+      <td>${t.v}</td>
+      <td>${t.e}</td>
+      <td>${t.d}</td>
+      <td>${t.sg}</td>
+    </tr>`;
+  });
 }
 
-th {
-  background: #111;
-  color: white;
-  padding: 10px;
-}
-
-td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
-
-/* CLASSIFICAÇÃO */
-.grupos {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-}
-
-.grupo {
-  background: white;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-/* TROFÉU */
-.titulo {
-  font-size: 22px;
-  font-weight: bold;
-}
+// INICIAR
+carregarSelecoes();
+atualizar();
