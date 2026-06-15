@@ -1,521 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Copa do Mundo 2026</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
 <div class="container">
 
 <h1>🏆 Copa do Mundo 2026</h1>
 
-<!-- CADASTRO -->
-
 <div class="card">
-
 <h2>Adicionar Partida</h2>
 
 <div class="formulario">
-
 <input type="date" id="data">
-
 <select id="time1"></select>
-
-<input
-type="number"
-id="gols1"
-min="0"
-value="0"
->
-
+<input type="number" id="gols1" min="0" value="0">
 <select id="time2"></select>
-
-<input
-type="number"
-id="gols2"
-min="0"
-value="0"
->
-
-<button id="btnAdicionar">
-Adicionar Partida
-</button>
-
+<input type="number" id="gols2" min="0" value="0">
+<button id="btnAdicionar">Adicionar</button>
 </div>
-
 </div>
-
-<!-- PARTIDAS -->
 
 <div class="card">
-
-<h2>Partidas Registradas</h2>
-
+<h2>Partidas</h2>
 <table id="tabelaPartidas">
-
 <thead>
-
 <tr>
 <th>Data</th>
 <th>Jogo</th>
 <th>Resultado</th>
 <th>Ação</th>
 </tr>
-
 </thead>
-
-<tbody>
-</tbody>
-
+<tbody></tbody>
 </table>
-
 </div>
 
-<!-- CLASSIFICAÇÃO GERAL -->
-
 <div class="card">
-
 <h2>🏆 Classificação Geral</h2>
-
 <table id="classificacaoGeral">
-
-<thead>
-
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>GP</th>
-<th>GC</th>
-<th>SG</th>
-</tr>
-
-</thead>
-
-<tbody>
-</tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO A -->
-
-<div class="card">
-
-<h2>🇦 Grupo A</h2>
-
-<table>
-
 <thead>
 <tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
+<th>#</th><th>Seleção</th><th>Pts</th><th>J</th>
+<th>V</th><th>E</th><th>D</th><th>GP</th><th>GC</th><th>SG</th>
 </tr>
 </thead>
-
-<tbody id="grupoA"></tbody>
-
+<tbody></tbody>
 </table>
+</div>
+
+<div class="card"><h2>Grupo A</h2><table><tbody id="grupoA"></tbody></table></div>
+<div class="card"><h2>Grupo B</h2><table><tbody id="grupoB"></tbody></table></div>
+<div class="card"><h2>Grupo C</h2><table><tbody id="grupoC"></tbody></table></div>
+<div class="card"><h2>Grupo D</h2><table><tbody id="grupoD"></tbody></table></div>
+<div class="card"><h2>Grupo E</h2><table><tbody id="grupoE"></tbody></table></div>
+<div class="card"><h2>Grupo F</h2><table><tbody id="grupoF"></tbody></table></div>
 
 </div>
 
-<!-- GRUPO B -->
+<script src="script.js"></script>
 
-<div class="card">
-
-<h2>🇧 Grupo B</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoB"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO C -->
-
-<div class="card">
-
-<h2>🇨 Grupo C</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoC"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO D -->
-
-<div class="card">
-
-<h2>🇩 Grupo D</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoD"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO E -->
-
-<div class="card">
-
-<h2>🇪 Grupo E</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoE"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO F -->
-
-<div class="card">
-
-<h2>🇫 Grupo F</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoF"></tbody>
-
-</table>
-
-</div>
-
-</div><div class="container">
-
-<h1>🏆 Copa do Mundo 2026</h1>
-
-<!-- CADASTRO -->
-
-<div class="card">
-
-<h2>Adicionar Partida</h2>
-
-<div class="formulario">
-
-<input type="date" id="data">
-
-<select id="time1"></select>
-
-<input
-type="number"
-id="gols1"
-min="0"
-value="0"
->
-
-<select id="time2"></select>
-
-<input
-type="number"
-id="gols2"
-min="0"
-value="0"
->
-
-<button id="btnAdicionar">
-Adicionar Partida
-</button>
-
-</div>
-
-</div>
-
-<!-- PARTIDAS -->
-
-<div class="card">
-
-<h2>Partidas Registradas</h2>
-
-<table id="tabelaPartidas">
-
-<thead>
-
-<tr>
-<th>Data</th>
-<th>Jogo</th>
-<th>Resultado</th>
-<th>Ação</th>
-</tr>
-
-</thead>
-
-<tbody>
-</tbody>
-
-</table>
-
-</div>
-
-<!-- CLASSIFICAÇÃO GERAL -->
-
-<div class="card">
-
-<h2>🏆 Classificação Geral</h2>
-
-<table id="classificacaoGeral">
-
-<thead>
-
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>GP</th>
-<th>GC</th>
-<th>SG</th>
-</tr>
-
-</thead>
-
-<tbody>
-</tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO A -->
-
-<div class="card">
-
-<h2>🇦 Grupo A</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoA"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO B -->
-
-<div class="card">
-
-<h2>🇧 Grupo B</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoB"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO C -->
-
-<div class="card">
-
-<h2>🇨 Grupo C</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoC"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO D -->
-
-<div class="card">
-
-<h2>🇩 Grupo D</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoD"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO E -->
-
-<div class="card">
-
-<h2>🇪 Grupo E</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoE"></tbody>
-
-</table>
-
-</div>
-
-<!-- GRUPO F -->
-
-<div class="card">
-
-<h2>🇫 Grupo F</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Pos</th>
-<th>Seleção</th>
-<th>Pts</th>
-<th>J</th>
-<th>V</th>
-<th>E</th>
-<th>D</th>
-<th>SG</th>
-</tr>
-</thead>
-
-<tbody id="grupoF"></tbody>
-
-</table>
-
-</div>
-
-</div>
+</body>
+</html>
